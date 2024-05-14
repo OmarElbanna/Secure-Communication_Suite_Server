@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/OmarElbanna/Secure-Communication_Suite_Server#readme",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^4.19.2",
     "mongodb": "^6.6.1",
     "socket.io": "^4.7.5"
