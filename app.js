@@ -90,6 +90,15 @@ const authenticateUser = async (username, hashedPassword) => {
     });
     
 
+    socket.on("getAllUsers",async(username)=>{
+        try{
+            const response = await users.find({"username":{$ne:username}}).toArray().sort();
+            socket.emit("getAllUsersResponse",{"users":response});
+        }
+        catch(error){
+            console.log(error);
+        }
+    });
   });
 
   const PORT = process.env.PORT || 3000;
