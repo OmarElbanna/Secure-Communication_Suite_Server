@@ -13,6 +13,7 @@ const client = new MongoClient(uri);
 let db;
 let users;
 let keys;
+
 async function connect() {
     try {
       await client.connect();
@@ -92,7 +93,7 @@ const authenticateUser = async (username, hashedPassword) => {
 
     socket.on("getAllUsers",async(username)=>{
         try{
-            const response = await users.find({"username":{$ne:username}}).toArray().sort();
+            const response = await keys.find({"username":{$ne:username}}).project({ username: 1, key: 1 }).toArray();
             socket.emit("getAllUsersResponse",{"users":response});
         }
         catch(error){
@@ -101,7 +102,7 @@ const authenticateUser = async (username, hashedPassword) => {
     });
   });
 
-  const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 httpServer.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+console.log(`Server listening on port ${PORT}`);
 });
