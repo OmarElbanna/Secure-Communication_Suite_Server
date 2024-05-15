@@ -13,7 +13,6 @@ const client = new MongoClient(uri);
 let db;
 let users;
 let keys;
-
 async function connect() {
     try {
       await client.connect();
@@ -100,6 +99,15 @@ const authenticateUser = async (username, hashedPassword) => {
             console.log(error);
         }
     });
+
+    socket.on("message",async({cyphertext, cypherkey, user})=>{
+      const sender = socket.user.username;
+      console.log(sender);
+      socket.emit("readMessage_"+String(user),{cyphertext,cypherkey,sender});
+  });
+
+
+
   });
 
 const PORT = process.env.PORT || 3000;
